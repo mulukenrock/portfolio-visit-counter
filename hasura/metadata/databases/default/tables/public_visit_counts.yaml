@@ -1,0 +1,11 @@
+table:
+  schema: public
+  name: visit_counts
+configuration:
+  custom_root_fields:
+    insert_one: insert_visit_count
+    select_by_pk: visit_count
+    delete_by_pk: delete_visit_count
+    update_by_pk: update_visit_count
+  column_config: {}
+  custom_column_names: {}

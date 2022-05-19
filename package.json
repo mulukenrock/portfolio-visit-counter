@@ -1,0 +1,69 @@
+{
+  "name": "portfolio-visit-counter",
+  "version": "1.0.0",
+  "main": "server.js",
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "dev:express": "nodemon server.js",
+    "dev": "docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d && yarn all:log",
+    "prod": "docker-compose up -d && yarn all:log",
+    "down": "docker-compose down",
+    "all:log": "docker-compose logs -f --tail 100",
+    "express:log": "docker-compose logs -f --tail 100 portfolio_visit_counter_express",
+    "graphql:log": "docker-compose logs -f --tail 100 portfolio_visit_counter_graphql_engine",
+    "hasura:init": "hasura init hasura",
+    "hasura": "hasura --project hasura --envfile ../.env",
+    "hasura:prod": "hasura --project hasura --envfile ../.env.prod",
+    "hasura:heroku": "hasura --project hasura --envfile ../.env.heroku",
+    "hasura:upgrade": "yarn hasura scripts update-project-v3",
+    "console": "yarn hasura console --api-port 4042 --console-port 4043 --no-browser",
+    "console:prod": "yarn hasura:prod console --api-port 4047 --console-port 4048",
+    "console:heroku": "yarn hasura:heroku console --api-port 4049 --console-port 4050",
+    "migrate": "yarn hasura migrate apply --database-name default && yarn hasura metadata apply",
+    "migrate:prod": "yarn hasura:prod migrate apply --database-name default && yarn hasura:prod metadata apply",
+    "migrate:heroku": "yarn hasura:heroku migrate apply --database-name default && yarn hasura:heroku metadata apply",
+    "metadata:reload": "yarn hasura metadata reload",
+    "migrate:status": "yarn hasura migrate status --database-name default",
+    "migrate:status:prod": "yarn hasura:prod migrate status --database-name default",
+    "migrate:status:heroku": "yarn hasura:heroku migrate status --database-name default",
+    "squash": "yarn hasura migrate create init --from-server --database-name default && yarn hasura metadata export",
+    "squash:prod": "yarn hasura:prod migrate create init --from-server --schema public --schema auth --schema basic --schema dashboard --schema log --schema pseudo && yarn hasura:prod metadata export",
+    "squash:apply": "yarn hasura migrate apply --version '1639593008369' --skip-execution --database-name default",
+    "squash:apply:prod": "yarn hasura:prod migrate apply --version '1639593008369' --skip-execution --database-name default",
+    "seed": "yarn hasura seeds apply --database-name default",
+    "seed:prod": "yarn hasura:prod seeds apply --database-name default",
+    "rebuild": "docker-compose -f docker-compose.yml -f docker-compose-dev.yml build portfolio_visit_counter_express && yarn dev",
+    "rebuild:prod": "docker-compose build portfolio_visit_counter_express && yarn dev",
+    "heroku:login": "heroku login",
+    "heroku:deploy": "git push heroku master",
+    "heroku:logs": "heroku logs -t --app $APP_NAME"
+  },
+  "dependencies": {
+    "apollo-boost": "^0.4.9",
+    "atob": "^2.1.2",
+    "body-parser": "^1.19.0",
+    "compression": "^1.0.3",
+    "cors": "^2.8.5",
+    "cross-fetch": "^3.0.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
+    "helmet": "^4.6.0",
+    "lodash": "^4.17.20",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "hasura-cli": "~2.5.0",
+    "heroku": "^7.59.2",
+    "nodemon": "^2.0.15"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "description": "portfolio-visit-counter-backend"
+}

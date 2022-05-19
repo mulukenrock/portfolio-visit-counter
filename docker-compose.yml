@@ -1,0 +1,41 @@
+version: '3.6'
+services:
+  portfolio_visit_counter_express:
+    network_mode: host
+    container_name: portfolio_visit_counter_express
+    build:
+      dockerfile: express.dockerfile
+      context: .
+      args:
+        - EXPRESS_PORT=${EXPRESS_PORT}
+    volumes: 
+      - ${LOCAL_UPLOADED_PATH}:/usr/src/app/docker-uploads
+    restart: always
+    environment:
+      - EXPRESS_PORT=${EXPRESS_PORT}
+      - HASURA_GRAPHQL_URL=${HASURA_GRAPHQL_URL}
+      - HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      - POSTGRES_URI=${POSTGRES_URI}
+      - PG_POSTGRES_URI=${PG_POSTGRES_URI}
+      - NODE_ENV=${NODE_ENV:-development}
+      - LOCAL_UPLOADED_PATH=${LOCAL_UPLOADED_PATH}
+  portfolio_visit_counter_graphql_engine:
+    container_name: portfolio_visit_counter_graphql_engine
+    network_mode: host
+    image: hasura/graphql-engine:v2.5.1
+    restart: always
+    depends_on:
+      - "portfolio_visit_counter_express"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: ${POSTGRES_URI}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
+      HASURA_GRAPHQL_CORS_DOMAIN: "*"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+      HASURA_GRAPHQL_SERVER_PORT: ${HASURA_GRAPHQL_SERVER_PORT}
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      ACTION_BASE_URL: ${ACTION_BASE_URL}
+      # HASURA_ACTION_SECRET: ${HASURA_ACTION_SECRET}
+
+
