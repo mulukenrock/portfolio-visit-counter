@@ -62,11 +62,11 @@ module.exports = async (req, res) => {
       if (
         getNestedSafe(() => updated.data.update_visit_counts.returning[0].total)
       )
-        res.status(200).json({
+        return res.status(200).json({
           total: updated.data.update_visit_counts.returning[0].total,
         });
       else
-        res.status(400).json({
+        return res.status(400).json({
           message: "Oops, something went wrong in data update!",
         });
     } else if (message)

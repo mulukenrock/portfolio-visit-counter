@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.EXPRESS_PORT;
 
 var corsOptions = {
-  origin: 'http://localhost:8081',
+  origin: process.env.CORS_ALLOWED_SITE,
   optionsSuccessStatus: 200 // For legacy browser support
 }
 

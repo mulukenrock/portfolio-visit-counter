@@ -38,14 +38,14 @@
     "rebuild": "docker-compose -f docker-compose.yml -f docker-compose-dev.yml build portfolio_visit_counter_express && yarn dev",
     "rebuild:prod": "docker-compose build portfolio_visit_counter_express && yarn dev",
     "heroku:login": "heroku login",
+    "heroku:create": "heroku create $HEROKU_APP_NAME --stack=container",
+    "heroku:create:postgres": "heroku addons:create heroku-postgresql:hobby-dev -a $APP_NAME",
     "heroku:deploy": "git push heroku master",
     "heroku:logs": "heroku logs -t --app $APP_NAME"
   },
   "dependencies": {
     "apollo-boost": "^0.4.9",
-    "atob": "^2.1.2",
     "body-parser": "^1.19.0",
-    "compression": "^1.0.3",
     "cors": "^2.8.5",
     "cross-fetch": "^3.0.5",
     "dotenv": "^8.2.0",
