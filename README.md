@@ -7,10 +7,10 @@ POSTGRES_URI=postgres://postgres:postgres@localhost:5432/portfolio
 HASURA_GRAPHQL_ADMIN_SECRET=secret
 HASURA_ACTION_SECRET=action_secret
 HASURA_GRAPHQL_URL=http://localhost:4040/v1/graphql
-EXPRESS_PORT=9041
+EXPRESS_PORT=4041
 HASURA_GRAPHQL_SERVER_PORT=4040
 ACTION_BASE_URL=http://localhost:4041
-LOCAL_UPLOADED_PATH=/home/ambassel/portfolio
+CORS_ALLOWED_SITES=["http://localhost:8081"]
 ```
 ## Build Setup
 

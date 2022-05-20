@@ -8,8 +8,6 @@ services:
       context: .
       args:
         - EXPRESS_PORT=${EXPRESS_PORT}
-    volumes: 
-      - ${LOCAL_UPLOADED_PATH}:/usr/src/app/docker-uploads
     restart: always
     environment:
       - EXPRESS_PORT=${EXPRESS_PORT}
@@ -18,7 +16,6 @@ services:
       - POSTGRES_URI=${POSTGRES_URI}
       - PG_POSTGRES_URI=${PG_POSTGRES_URI}
       - NODE_ENV=${NODE_ENV:-development}
-      - LOCAL_UPLOADED_PATH=${LOCAL_UPLOADED_PATH}
   portfolio_visit_counter_graphql_engine:
     container_name: portfolio_visit_counter_graphql_engine
     network_mode: host
@@ -36,7 +33,7 @@ services:
       HASURA_GRAPHQL_SERVER_PORT: ${HASURA_GRAPHQL_SERVER_PORT}
       HASURA_GRAPHQL_DEV_MODE: "true"
       ACTION_BASE_URL: ${ACTION_BASE_URL}
-      CORS_ALLOWED_SITE: ${CORS_ALLOWED_SITE}
+      CORS_ALLOWED_SITES: ${CORS_ALLOWED_SITES}
       # HASURA_ACTION_SECRET: ${HASURA_ACTION_SECRET}
 
 

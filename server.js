@@ -9,9 +9,16 @@ const helmet = require("helmet");
 const app = express();
 
 const port = process.env.EXPRESS_PORT;
+const allowed_sites = JSON.parse(process.env.CORS_ALLOWED_SITES);
 
 var corsOptions = {
-  origin: process.env.CORS_ALLOWED_SITE,
+  origin: (origin, callback) => {
+    if (allowed_sites.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed'))
+    }
+  },
   optionsSuccessStatus: 200 // For legacy browser support
 }
 
